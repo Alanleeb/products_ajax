@@ -1,5 +1,6 @@
-var del = '<button id=delete-item> Delete</button>'
-var url = ' http://json-server.devpointlabs.com/api/v1/products/'
+var del = '<button id="delete" >' + 'Delete' + '</button>'
+var edit = '<button id="edit" >' + 'Edit' + '</button>'
+const url = ' http://json-server.devpointlabs.com/api/v1/products/'
 
 $(document).ready( function() {
       $.ajax({
@@ -9,7 +10,7 @@ $(document).ready( function() {
       }).done( function(products) {
         var list = $('#products');
         products.forEach( function(char) {
-          var li = '<li data-product-id="' + char.id + '">' + char.name + '</li>'
+          var li = '<li data-product-id="' + char.id +'">' + 'Name: ' + char.name + '<br />' +  'Description: ' + char.description + '<br />' + 'Price :' + char.price + '<br />' + del + edit + '</li>'
           list.append(li)
         });
       });
@@ -25,15 +26,15 @@ $(document).ready( function() {
         data: item
       }).done( function(item){
         var list = $('#products');
-        var li = '<li data-product-id="' + item.id + '">' + item.name + ' </li>'
+        var li = '<li data-product-id="' + item.id +'">' + 'Name: ' + item.name + '<br />' +  'Description: ' + item.description + '<br />' + 'Price :' + item.price + '<hr />' + del +  edit + '</li>'
         list.append(li)
         $('#name').val("")
         $('#price').val("")
         $('#description').val("")
       })
     })
-    $(del).on('click', '#delete-item', function(){
-      var id = $(this).siblings('products').dataset().id 
+    $(document).on('click', '#delete', function(){
+      var id = this.parentElement.dataset.productId
       debugger
      $.ajax({
        url: url + id,
